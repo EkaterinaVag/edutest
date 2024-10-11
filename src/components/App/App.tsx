@@ -46,7 +46,7 @@ const App = (): JSX.Element => {
     }
   })
 
-  return isTimerOver != null
+  return isTimerOver === true
     ? <TestCompletionPage isTimerOver={true} />
     : currentQuestionIndex === totalQuestions
       ? <TestCompletionPage isTimerOver={false} />
