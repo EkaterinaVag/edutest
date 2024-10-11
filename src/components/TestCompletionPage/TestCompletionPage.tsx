@@ -16,7 +16,7 @@ const TestCompletionPage = (props: TestCompletionProps) => {
           : 'Тестирование успешно завершено!'}
       </h2>
       <p className={styles.text}>Вы можете ознакомиться с результатами</p>
-      <Button text={'Просмотреть результаты'} />
+      <Button text={'Просмотреть результаты'} onClick={(): void => alert('Вы молодец!')}/>
     </div>
   );
 };
