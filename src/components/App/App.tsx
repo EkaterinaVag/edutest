@@ -21,9 +21,7 @@ const App = () => {
   const dispatch = useAppDispatch();
   const currentQuestionIndex = useAppSelector(getCurrentQuestionIndex);
   const savedQuestion = localStorage.getItem('currentQuestion');
-  if (savedQuestion) {
-    dispatch(setCurrentQuestionIndex(Number(savedQuestion)));
-  }
+  if (savedQuestion) dispatch(setCurrentQuestionIndex(Number(savedQuestion)));
 
   const [timerComponent, isTimerOver] = useCountDownTimer(10, 0);
   const [usersAnswers, setUsersAnswers] = useState<UserAnswer[]>([]);
@@ -45,10 +43,10 @@ const App = () => {
     },
   });
 
-  return isTimerOver || currentQuestionIndex === totalQuestions ? (
-    <TestCompletionPage isTimerOver={true} />
-  ) : (
-    <div className={styles.container}>
+  return (isTimerOver && <TestCompletionPage isTimerOver={true} />) ||
+    (currentQuestionIndex === totalQuestions && <TestCompletionPage isTimerOver={false} />) ||
+
+    (<div className={styles.container}>
       <div className={styles.testBox}>
         <h2 className={styles.title}>Тестирование</h2>
         {timerComponent}
@@ -64,8 +62,7 @@ const App = () => {
         options={questions[currentQuestionIndex]?.options}
         formik={formik as any}
       />
-    </div>
-  );
+    </div>)
 };
 
 export default App;
