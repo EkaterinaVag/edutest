@@ -2,12 +2,13 @@ import styles from './Button.module.css';
 
 interface ButtonProps {
   text: string,
+  onClick?: any,
 }
 
 const Button = (props: ButtonProps) => {
-  const { text } = props;
+  const { text, onClick } = props;
   return (
-    <button type="submit" className={styles.button}>
+    <button onClick={onClick} type="submit" className={styles.button}>
       {text}
     </button>
   );
