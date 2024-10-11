@@ -1,0 +1,33 @@
+.question {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.option input[type="radio"] {
+  accent-color: #b92a35;
+}
+
+.option input[type="checkbox"] {
+  accent-color: #b92a35;
+}
+
+.options {
+  line-height: 1.8;
+  padding-bottom: 30px;
+}
+
+.textarea {
+  margin: 20px 0px;
+  width: 400px;
+  height: 150px;
+  font-size: 16px;
+}
+
+.input {
+  margin: 20px 0px;
+  width: 210px;
+  height: 25px;
+  font-size: 16px;
+}

@@ -1,0 +1,15 @@
+.container {
+    grid-column: 2 / -2;
+    grid-row: 2 / -1;
+}
+
+.testBox {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0px;
+}
