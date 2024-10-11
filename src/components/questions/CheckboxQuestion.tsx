@@ -1,10 +1,10 @@
-import React from 'react';
-import Button from '../Button/Button';
-import styles from './CommonQuestions.module.css';
-import { QuestionsProps } from '../../types';
+import React from 'react'
+import Button from '../Button/Button'
+import styles from './CommonQuestions.module.css'
+import { type QuestionsProps } from '../../types'
 
-const CheckboxQuestion = (props: QuestionsProps) => {
-  const { question, options, formik } = props;
+const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
+  const { question, options, formik } = props
   return (
     <form onSubmit={formik.handleSubmit}>
       <h3 className={styles.question}>{question}</h3>
@@ -17,17 +17,17 @@ const CheckboxQuestion = (props: QuestionsProps) => {
                 name="answer"
                 value={option}
                 checked={formik.values.answer.includes(option)}
-                onChange={(e) => {
+                onChange={async (e) => {
                   if (e.target.checked) {
-                    formik.setFieldValue('answer', [
+                    await formik.setFieldValue('answer', [
                       ...formik.values.answer,
-                      option,
-                    ]);
+                      option
+                    ])
                   } else {
-                    formik.setFieldValue(
+                    await formik.setFieldValue(
                       'answer',
                       formik.values.answer.filter((item) => item !== option)
-                    );
+                    )
                   }
                 }}
               />
@@ -39,7 +39,7 @@ const CheckboxQuestion = (props: QuestionsProps) => {
       </div>
       <Button text={'Ответить'} />
     </form>
-  );
-};
+  )
+}
 
-export default CheckboxQuestion;
+export default CheckboxQuestion

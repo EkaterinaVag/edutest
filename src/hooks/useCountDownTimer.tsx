@@ -1,45 +1,45 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import styles from './useCountDownTimer.module.css'
 
-const useCountDownTimer = (minutes = 0, seconds = 0) => {
-  const [isOver, setIsOver] = useState(false);
-  const [[m, s], setTime] = useState([minutes, seconds]);
+const useCountDownTimer = (minutes = 0, seconds = 0): Array<JSX.Element | boolean> => {
+  const [isOver, setIsOver] = useState(false)
+  const [[m, s], setTime] = useState([minutes, seconds])
 
-  const tick = () => {
-    if (isOver) return;
+  const tick = (): void => {
+    if (isOver) return
     if (m === 0 && s === 0) {
-      setIsOver(true);
-      localStorage.removeItem('timer');
+      setIsOver(true)
+      localStorage.removeItem('timer')
     } else if (s === 0) {
-      setTime([m - 1, 59]);
+      setTime([m - 1, 59])
     } else {
-      setTime([m, s - 1]);
+      setTime([m, s - 1])
     }
-  };
+  }
 
   useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
-    return () => clearInterval(timerID);
-  });
+    const timerID = setInterval(() => { tick() }, 1000)
+    return () => { clearInterval(timerID) }
+  })
 
   useEffect(() => {
-    localStorage.setItem('timer', JSON.stringify([m, s]));
-  }, [m, s]);
+    localStorage.setItem('timer', JSON.stringify([m, s]))
+  }, [m, s])
 
   useEffect(() => {
-    const savedTimer = localStorage.getItem('timer');
-    if (savedTimer) {
-      const [savedMinutes, savedSeconds] = JSON.parse(savedTimer);
-      setTime([savedMinutes, savedSeconds]);
+    const savedTimer = localStorage.getItem('timer')
+    if (savedTimer != null) {
+      const [savedMinutes, savedSeconds] = JSON.parse(savedTimer)
+      setTime([savedMinutes, savedSeconds])
     }
   }, [])
 
   return [
-    <div className={styles.timer}>{`${m.toString().padStart(2, '0')} : ${s
+    <div key='timer' className={styles.timer}>{`${m.toString().padStart(2, '0')} : ${s
       .toString()
       .padStart(2, '0')}`}</div>,
-    isOver,
-  ];
-};
+    isOver
+  ]
+}
 
-export default useCountDownTimer;
+export default useCountDownTimer
