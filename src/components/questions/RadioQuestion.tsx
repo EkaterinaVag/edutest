@@ -1,12 +1,6 @@
-import { FormikProps } from 'formik';
 import Button from '../Button/Button';
 import styles from './CommonQuestions.module.css';
-
-interface QuestionsProps {
-  question: string,
-  options?: string[],
-  formik: FormikProps<{ answer: string[] }>;
-}
+import { QuestionsProps } from '../../types';
 
 const RadioQuestion = (props: QuestionsProps) => {
   const { question, options, formik } = props;

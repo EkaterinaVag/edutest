@@ -1,14 +1,6 @@
-import React from 'react';
-import { FormikProps } from 'formik';
+import { QuestionsProps } from '../../types';
 import Button from '../Button/Button';
 import styles from './CommonQuestions.module.css';
-
-interface QuestionsProps {
-  question: string,
-  options?: string[],
-  formik: FormikProps<{ answer: string[] }>;
-};
-
 
 const TextInputQuestion = (props: QuestionsProps) => {
   const { question, formik } = props;
