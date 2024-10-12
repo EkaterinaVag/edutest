@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styles from './useCountDownTimer.module.css'
 
-const useCountDownTimer = (minutes = 0, seconds = 0): Array<JSX.Element | boolean> => {
-  const [isOver, setIsOver] = useState(false)
-  const [[m, s], setTime] = useState([minutes, seconds])
+interface Timer {
+  component: JSX.Element
+  isTimerOver: boolean
+}
+
+const useCountDownTimer = (initialMinutes = 0, initialSeconds = 0): Timer => {
+  const [isTimerOver, setIsOver] = useState(false)
+  const [[m, s], setTime] = useState([initialMinutes, initialSeconds])
 
   const tick = (): void => {
-    if (isOver) return
+    if (isTimerOver) return
     if (m === 0 && s === 0) {
       setIsOver(true)
       localStorage.removeItem('timer')
@@ -18,15 +23,6 @@ const useCountDownTimer = (minutes = 0, seconds = 0): Array<JSX.Element | boolea
   }
 
   useEffect(() => {
-    const timerID = setInterval(() => { tick() }, 1000)
-    return () => { clearInterval(timerID) }
-  })
-
-  useEffect(() => {
-    localStorage.setItem('timer', JSON.stringify([m, s]))
-  }, [m, s])
-
-  useEffect(() => {
     const savedTimer = localStorage.getItem('timer')
     if (savedTimer != null) {
       const [savedMinutes, savedSeconds] = JSON.parse(savedTimer)
@@ -34,12 +30,27 @@ const useCountDownTimer = (minutes = 0, seconds = 0): Array<JSX.Element | boolea
     }
   }, [])
 
-  return [
-    <div key='timer' className={styles.timer}>{`${m.toString().padStart(2, '0')} : ${s
-      .toString()
-      .padStart(2, '0')}`}</div>,
-    isOver
-  ]
+  useEffect(() => {
+    if (m === 0 && s === 0) {
+      setIsOver(true)
+      localStorage.removeItem('timer')
+    } else {
+      const timerID = setInterval(() => { tick() }, 1000)
+      return () => { clearInterval(timerID) }
+    }
+  }, [m, s])
+
+  useEffect(() => {
+    localStorage.setItem('timer', JSON.stringify([m, s]))
+  }, [m, s])
+
+  const timerComponent = (
+    <div key='timer' className={styles.timer}>
+      {`${m.toString().padStart(2, '0')} : ${s.toString().padStart(2, '0')}`}
+    </div>
+  )
+
+  return { component: timerComponent, isTimerOver }
 }
 
 export default useCountDownTimer
