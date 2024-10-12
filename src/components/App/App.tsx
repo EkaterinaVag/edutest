@@ -26,7 +26,7 @@ const App = (): JSX.Element => {
     dispatch(setCurrentQuestionIndex(Number(savedQuestion)))
   };
 
-  const { component: timerComponent, isTimerOver } = useCountDownTimer(5, 0)
+  const { component: timerComponent, isTimerOver } = useCountDownTimer(10, 0)
   const [usersAnswers, setUsersAnswers] = useState<UserAnswer[]>([])
 
   const formik = useFormik({
