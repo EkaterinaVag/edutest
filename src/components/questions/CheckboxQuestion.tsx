@@ -5,6 +5,7 @@ import { type QuestionsProps } from '../../types'
 
 const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
   const { question, options, formik } = props
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <h3 className={styles.question}>{question}</h3>
@@ -17,14 +18,14 @@ const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
                 name="answer"
                 value={option}
                 checked={formik.values.answer.includes(option)}
-                onChange={async (e) => {
+                onChange={(e) => {
                   if (e.target.checked) {
-                    await formik.setFieldValue('answer', [
+                    void formik.setFieldValue('answer', [
                       ...formik.values.answer,
                       option
                     ])
                   } else {
-                    await formik.setFieldValue(
+                    void formik.setFieldValue(
                       'answer',
                       formik.values.answer.filter((item) => item !== option)
                     )
