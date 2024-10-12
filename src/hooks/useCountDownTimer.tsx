@@ -7,13 +7,13 @@ interface Timer {
 }
 
 const useCountDownTimer = (initialMinutes = 0, initialSeconds = 0): Timer => {
-  const [isTimerOver, setTimerIsOver] = useState(false)
+  const [isTimerOver, setIsTimerOver] = useState(false)
   const [[m, s], setTime] = useState([initialMinutes, initialSeconds])
 
   const tick = (): void => {
     if (isTimerOver) return
     if (m === 0 && s === 0) {
-      setTimerIsOver(true)
+      setIsTimerOver(true)
       localStorage.removeItem('timer')
     } else if (s === 0) {
       setTime([m - 1, 59])
@@ -32,7 +32,7 @@ const useCountDownTimer = (initialMinutes = 0, initialSeconds = 0): Timer => {
 
   useEffect(() => {
     if (m === 0 && s === 0) {
-      setTimerIsOver(true)
+      setIsTimerOver(true)
       localStorage.removeItem('timer')
     } else {
       const timerID = setInterval(() => { tick() }, 1000)
