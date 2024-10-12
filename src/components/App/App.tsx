@@ -26,7 +26,7 @@ const App = (): JSX.Element => {
     dispatch(setCurrentQuestionIndex(Number(savedQuestion)))
   };
 
-  const [timerComponent, isTimerOver] = useCountDownTimer(10, 0)
+  const { component: timerComponent, isTimerOver } = useCountDownTimer(10, 0)
   const [usersAnswers, setUsersAnswers] = useState<UserAnswer[]>([])
 
   const formik = useFormik({
@@ -46,27 +46,25 @@ const App = (): JSX.Element => {
     }
   })
 
-  return isTimerOver === true
-    ? <TestCompletionPage isTimerOver={true} />
-    : currentQuestionIndex === totalQuestions
-      ? <TestCompletionPage isTimerOver={false} />
-      : (<div className={styles.container}>
-        <div className={styles.testBox}>
-          <h2 className={styles.title}>Тестирование</h2>
-          {timerComponent}
-        </div>
-        <ProgressBar
-          progress={currentQuestionIndex + 1}
-          totalQuestions={totalQuestions}
-          currentQuestionIndex={currentQuestionIndex}
-        />
-        <RenderQuestion
-          type={questions[currentQuestionIndex]?.type}
-          question={questions[currentQuestionIndex]?.question}
-          options={questions[currentQuestionIndex]?.options}
-          formik={formik as any}
-        />
-      </div>)
+  return isTimerOver || currentQuestionIndex === totalQuestions
+    ? <TestCompletionPage isTimerOver={isTimerOver} />
+    : (<div className={styles.container}>
+      <div className={styles.testBox}>
+        <h2 className={styles.title}>Тестирование</h2>
+        {timerComponent}
+      </div>
+      <ProgressBar
+        progress={currentQuestionIndex + 1}
+        totalQuestions={totalQuestions}
+        currentQuestionIndex={currentQuestionIndex}
+      />
+      <RenderQuestion
+        type={questions[currentQuestionIndex]?.type}
+        question={questions[currentQuestionIndex]?.question}
+        options={questions[currentQuestionIndex]?.options}
+        formik={formik as any}
+      />
+    </div>)
 }
 
 export default App
