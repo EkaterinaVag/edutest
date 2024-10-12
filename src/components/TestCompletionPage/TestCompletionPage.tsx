@@ -9,6 +9,7 @@ interface TestCompletionProps {
 const TestCompletionPage = (props: TestCompletionProps): JSX.Element => {
   const { isTimerOver } = props
   localStorage.removeItem('currentQuestion')
+  localStorage.removeItem('timer')
   return (
     <div className={styles.container}>
       <h2>
