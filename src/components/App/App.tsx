@@ -29,11 +29,12 @@ const App = (): JSX.Element => {
   const { component: timerComponent, isTimerOver } = useCountDownTimer(10, 0)
   const [usersAnswers, setUsersAnswers] = useState<UserAnswer[]>([])
 
+  console.log('cq', currentQuestionIndex, 'to', totalQuestions)
   const formik = useFormik({
     initialValues: {
       answer: []
     },
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       const questionId = questions[currentQuestionIndex]?.id
       setUsersAnswers([
         ...usersAnswers,
@@ -41,7 +42,7 @@ const App = (): JSX.Element => {
       ])
 
       localStorage.setItem('currentQuestion', JSON.stringify(currentQuestionIndex + 1))
-      await formik.setFieldValue('answer', [])
+      void formik.setFieldValue('answer', [])
       dispatch(nextQuestionIndex())
     }
   })
