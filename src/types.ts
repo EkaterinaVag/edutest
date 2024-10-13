@@ -1,7 +1,7 @@
-import { type FormikProps } from 'formik'
+import { type FormikProps } from 'formik';
 
 export interface QuestionsProps {
   question: string
   options?: string[]
   formik: FormikProps<{ answer: string[] }>
-};
+}

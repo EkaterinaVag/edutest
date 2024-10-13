@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './ProgressBar.module.css'
+import React from 'react';
+import styles from './ProgressBar.module.css';
 
 interface ProgressBarProps {
   progress: number
@@ -8,8 +8,8 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = (props: ProgressBarProps): JSX.Element => {
-  const { progress, totalQuestions, currentQuestionIndex } = props
-  const bars = []
+  const { progress, totalQuestions, currentQuestionIndex } = props;
+  const bars = [];
   for (let i = 0; i < totalQuestions; i++) {
     bars.push(
       <div
@@ -17,9 +17,9 @@ const ProgressBar = (props: ProgressBarProps): JSX.Element => {
         className={`${styles.progress} ${i < progress ? styles.filled : ''} 
         ${i === currentQuestionIndex ? styles.current : ''}`}
       />
-    )
+    );
   }
-  return <div className={styles.container}>{bars}</div>
-}
+  return <div className={styles.container}>{bars}</div>;
+};
 
-export default ProgressBar
+export default ProgressBar;

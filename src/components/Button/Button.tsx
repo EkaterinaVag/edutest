@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './Button.module.css'
+import React from 'react';
+import styles from './Button.module.css';
 
 interface ButtonProps {
   text: string
@@ -7,12 +7,12 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps): JSX.Element => {
-  const { text, onClick } = props
+  const { text, onClick } = props;
   return (
     <button onClick={onClick} type="submit" className={styles.button}>
       {text}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

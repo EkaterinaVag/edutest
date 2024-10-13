@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface QuestionState {
   currentQuestionIndex: number
@@ -7,22 +7,22 @@ interface QuestionState {
 
 const initialState: QuestionState = {
   currentQuestionIndex: 0
-}
+};
 
 export const questionSlice = createSlice({
   name: 'question',
   initialState,
   reducers: {
     nextQuestionIndex: (state) => {
-      state.currentQuestionIndex += 1
+      state.currentQuestionIndex += 1;
     },
     setCurrentQuestionIndex: (state, action: PayloadAction<number>) => {
-      state.currentQuestionIndex = action.payload
+      state.currentQuestionIndex = action.payload;
     }
   }
-})
+});
 
 export const { nextQuestionIndex, setCurrentQuestionIndex } =
-  questionSlice.actions
+  questionSlice.actions;
 
-export default questionSlice.reducer
+export default questionSlice.reducer;

@@ -106,8 +106,8 @@ const questions: Question[] = [
     question: 'Что такое SQL?',
     answer: 'Structured Query Language'
   }
-]
+];
 
-const totalQuestions: number = questions.length
+const totalQuestions: number = questions.length;
 
-export { questions, totalQuestions }
+export { questions, totalQuestions };

@@ -1,16 +1,16 @@
-import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import { useFormik } from 'formik';
+import React, { useState } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../hooks/hooks'
-import useCountDownTimer from '../../hooks/useCountDownTimer'
-import { nextQuestionIndex, setCurrentQuestionIndex } from '../../store/slices/questionSlice'
-import { questions, totalQuestions } from '../../questions'
-import getCurrentQuestionIndex from '../../store/slices/questionSelector'
-import styles from './App.module.css'
+import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import useCountDownTimer from '../../hooks/useCountDownTimer';
+import { nextQuestionIndex, setCurrentQuestionIndex } from '../../store/slices/questionSlice';
+import { questions, totalQuestions } from '../../questions';
+import getCurrentQuestionIndex from '../../store/slices/questionSelector';
+import styles from './App.module.css';
 
-import ProgressBar from '../ProgressBar/ProgressBar'
-import RenderQuestion from '../RenderQuestion'
-import TestCompletionPage from '../TestCompletionPage/TestCompletionPage'
+import ProgressBar from '../ProgressBar/ProgressBar';
+import RenderQuestion from '../RenderQuestion';
+import TestCompletionPage from '../TestCompletionPage/TestCompletionPage';
 
 interface UserAnswer {
   questionId?: number
@@ -18,34 +18,34 @@ interface UserAnswer {
 }
 
 const App = (): JSX.Element => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const currentQuestionIndex = useAppSelector(getCurrentQuestionIndex)
-  const savedQuestion = localStorage.getItem('currentQuestion')
+  const currentQuestionIndex = useAppSelector(getCurrentQuestionIndex);
+  const savedQuestion = localStorage.getItem('currentQuestion');
   if (savedQuestion != null) {
-    dispatch(setCurrentQuestionIndex(Number(savedQuestion)))
-  };
+    dispatch(setCurrentQuestionIndex(Number(savedQuestion)));
+  }
 
-  const { component: timerComponent, isTimerOver } = useCountDownTimer(10, 0)
-  const [usersAnswers, setUsersAnswers] = useState<UserAnswer[]>([])
+  const { component: timerComponent, isTimerOver } = useCountDownTimer(10, 0);
+  const [usersAnswers, setUsersAnswers] = useState<UserAnswer[]>([]);
 
-  console.log('cq', currentQuestionIndex, 'to', totalQuestions)
+  console.log('cq', currentQuestionIndex, 'to', totalQuestions);
   const formik = useFormik({
     initialValues: {
       answer: []
     },
     onSubmit: (values) => {
-      const questionId = questions[currentQuestionIndex]?.id
+      const questionId = questions[currentQuestionIndex]?.id;
       setUsersAnswers([
         ...usersAnswers,
         { questionId, answer: values.answer }
-      ])
+      ]);
 
-      localStorage.setItem('currentQuestion', JSON.stringify(currentQuestionIndex + 1))
-      void formik.setFieldValue('answer', [])
-      dispatch(nextQuestionIndex())
+      localStorage.setItem('currentQuestion', JSON.stringify(currentQuestionIndex + 1));
+      void formik.setFieldValue('answer', []);
+      dispatch(nextQuestionIndex());
     }
-  })
+  });
 
   return isTimerOver || currentQuestionIndex === totalQuestions
     ? <TestCompletionPage isTimerOver={isTimerOver} />
@@ -65,7 +65,7 @@ const App = (): JSX.Element => {
         options={questions[currentQuestionIndex]?.options}
         formik={formik as any}
       />
-    </div>)
-}
+    </div>);
+};
 
-export default App
+export default App;

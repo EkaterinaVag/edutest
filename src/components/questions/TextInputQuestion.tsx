@@ -1,10 +1,10 @@
-import React from 'react'
-import { type QuestionsProps } from '../../types'
-import Button from '../Button/Button'
-import styles from './CommonQuestions.module.css'
+import React from 'react';
+import { type QuestionsProps } from '../../types';
+import Button from '../Button/Button';
+import styles from './CommonQuestions.module.css';
 
 const TextInputQuestion = (props: QuestionsProps): JSX.Element => {
-  const { question, formik } = props
+  const { question, formik } = props;
   return (
     <form onSubmit={formik.handleSubmit}>
       <h3 className={styles.question}>{question}</h3>
@@ -23,7 +23,7 @@ const TextInputQuestion = (props: QuestionsProps): JSX.Element => {
       <br />
       <Button text={'Ответить'} />
     </form>
-  )
-}
+  );
+};
 
-export default TextInputQuestion
+export default TextInputQuestion;

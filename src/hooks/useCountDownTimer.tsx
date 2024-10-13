@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import styles from './useCountDownTimer.module.css'
+import React, { useState, useEffect } from 'react';
+import styles from './useCountDownTimer.module.css';
 
 interface Timer {
   component: JSX.Element
@@ -7,50 +7,50 @@ interface Timer {
 }
 
 const useCountDownTimer = (initialMinutes = 0, initialSeconds = 0): Timer => {
-  const [isTimerOver, setIsOver] = useState(false)
-  const [[m, s], setTime] = useState([initialMinutes, initialSeconds])
+  const [isTimerOver, setIsOver] = useState(false);
+  const [[m, s], setTime] = useState([initialMinutes, initialSeconds]);
 
   const tick = (): void => {
-    if (isTimerOver) return
+    if (isTimerOver) return;
     if (m === 0 && s === 0) {
-      setIsOver(true)
-      localStorage.removeItem('timer')
+      setIsOver(true);
+      localStorage.removeItem('timer');
     } else if (s === 0) {
-      setTime([m - 1, 59])
+      setTime([m - 1, 59]);
     } else {
-      setTime([m, s - 1])
+      setTime([m, s - 1]);
     }
-  }
+  };
 
   useEffect(() => {
-    const savedTimer = localStorage.getItem('timer')
+    const savedTimer = localStorage.getItem('timer');
     if (savedTimer != null) {
-      const [savedMinutes, savedSeconds] = JSON.parse(savedTimer)
-      setTime([savedMinutes, savedSeconds])
+      const [savedMinutes, savedSeconds] = JSON.parse(savedTimer);
+      setTime([savedMinutes, savedSeconds]);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (m === 0 && s === 0) {
-      setIsOver(true)
-      localStorage.removeItem('timer')
+      setIsOver(true);
+      localStorage.removeItem('timer');
     } else {
-      const timerID = setInterval(() => { tick() }, 1000)
-      return () => { clearInterval(timerID) }
+      const timerID = setInterval(() => { tick(); }, 1000);
+      return () => { clearInterval(timerID); };
     }
-  }, [m, s])
+  }, [m, s]);
 
   useEffect(() => {
-    localStorage.setItem('timer', JSON.stringify([m, s]))
-  }, [m, s])
+    localStorage.setItem('timer', JSON.stringify([m, s]));
+  }, [m, s]);
 
   const timerComponent = (
     <div key='timer' className={styles.timer}>
       {`${m.toString().padStart(2, '0')} : ${s.toString().padStart(2, '0')}`}
     </div>
-  )
+  );
 
-  return { component: timerComponent, isTimerOver }
-}
+  return { component: timerComponent, isTimerOver };
+};
 
-export default useCountDownTimer
+export default useCountDownTimer;
