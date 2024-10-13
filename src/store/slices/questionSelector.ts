@@ -1,5 +1,5 @@
-import { type RootState } from '../store'
+import { type RootState } from '../store';
 
-const getCurrentQuestionIndex = (state: RootState): number => state.question.currentQuestionIndex
+const getCurrentQuestionIndex = (state: RootState): number => state.question.currentQuestionIndex;
 
-export default getCurrentQuestionIndex
+export default getCurrentQuestionIndex;
