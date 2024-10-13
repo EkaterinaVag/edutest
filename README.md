@@ -6,10 +6,6 @@
 
 This project represents the client-side portion of a knowledge assessment system designed for evaluating students in a school setting. The application is built using React with TypeScript and aims to conduct intermediate assessments in a test format.
 
-## Demo
-
-Check out live demo [here](https://edutest-green.vercel.app/) :earth_asia:
-
 ## Features
 
 * Support for standard question types:
@@ -22,3 +18,16 @@ Check out live demo [here](https://edutest-green.vercel.app/) :earth_asia:
 * Preservation of test progress upon page reload.
 * Capability to add new question types in the future.
 * User-friendly interface for conducting tests using a step-by-step form format.
+
+## Installation
+Prerequisites: Node.js 
+```
+
+ git clone https://github.com/EkaterinaVag/edutest.git
+
+ cd edutest
+
+ npm ci
+
+ npm run start
+```
