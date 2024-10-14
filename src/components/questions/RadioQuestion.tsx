@@ -25,6 +25,11 @@ const RadioQuestion = (props: QuestionsProps): JSX.Element => {
           </>
         ))}
       </div>
+      {formik.errors.answer && (
+        <div className={styles.error}>
+          {formik.errors.answer}
+        </div>
+      )}
       <Button text={'Ответить'} />
     </form>
   );

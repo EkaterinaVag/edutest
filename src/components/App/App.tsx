@@ -33,6 +33,13 @@ const App = (): JSX.Element => {
     initialValues: {
       answer: []
     },
+    validate: (values) => {
+      const errors: any = {};
+      if (values.answer.length === 0) {
+        errors.answer = 'Пожалуйста, выберите ответ';
+      }
+      return errors;
+    },
     onSubmit: (values) => {
       const questionId = questions[currentQuestionIndex]?.id;
       setUsersAnswers([
