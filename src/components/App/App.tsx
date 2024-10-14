@@ -35,7 +35,7 @@ const App = (): JSX.Element => {
     },
     validate: (values) => {
       const errors: { answer?: string } = {};
-      if (values.answer.length === 0 && !formik.touched.answer) {
+      if (values.answer.length === 0) {
         errors.answer = 'Пожалуйста, выберите ответ';
       }
       return errors;
