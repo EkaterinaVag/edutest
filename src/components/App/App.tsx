@@ -34,7 +34,7 @@ const App = (): JSX.Element => {
       answer: []
     },
     validate: (values) => {
-      const errors: any = {};
+      const errors: { answer?: string } = {};
       if (values.answer.length === 0) {
         errors.answer = 'Пожалуйста, выберите ответ';
       }
