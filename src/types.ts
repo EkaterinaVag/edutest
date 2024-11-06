@@ -1,7 +1,14 @@
-import { type FormikProps } from 'formik';
+export interface FormValues {
+  answer: string | string[]
+}
 
 export interface QuestionsProps {
-  question: string
-  options?: string[]
-  formik: FormikProps<{ answer: string[] }>
+  question: string,
+  options?: string[],
+}
+
+export interface MyFormProps {
+  question: string,
+  options?: string[],
+  handleSubmit: ( values: FormValues) => void,
 }
