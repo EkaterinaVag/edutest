@@ -1,13 +1,15 @@
 import React from 'react';
+import { withFormik, FormikProps } from 'formik';
+
 import Button from '../Button/Button';
 import styles from './CommonQuestions.module.css';
-import { type QuestionsProps } from '../../types';
+import { FormValues, QuestionsProps, MyFormProps } from '../../types';
 
-const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
-  const { question, options, formik } = props;
+const CheckboxQuestion = (props: QuestionsProps & FormikProps<FormValues>) => {
+  const { question, options, handleSubmit, values, errors, setFieldValue } = props;
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <h3 className={styles.question}>{question}</h3>
       <div className={styles.options}>
         {options?.map((option) => (
@@ -17,18 +19,22 @@ const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
                 type="checkbox"
                 name="answer"
                 value={option}
-                checked={formik.values.answer.includes(option)}
+                checked={values.answer.includes(option)}
                 onChange={(e) => {
                   if (e.target.checked) {
-                    void formik.setFieldValue('answer', [
-                      ...formik.values.answer,
-                      option
-                    ]);
+                    if (typeof values.answer === 'string') {
+                      setFieldValue('answer', [values.answer, option]);
+                    } else {
+                      setFieldValue('answer', [...values.answer, option]);
+                    }
                   } else {
-                    void formik.setFieldValue(
-                      'answer',
-                      formik.values.answer.filter((item) => item !== option)
-                    );
+                    if (typeof values.answer === 'string') {
+                      if (values.answer === option) {
+                        setFieldValue('answer', []);
+                      }
+                    } else {
+                      setFieldValue('answer', values.answer.filter((item) => item !== option));
+                    }
                   }
                 }}
               />
@@ -38,9 +44,9 @@ const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
           </>
         ))}
       </div>
-      {formik.errors.answer && (
+      {errors.answer && (
         <div className={styles.error}>
-          {formik.errors.answer}
+          {errors.answer}
         </div>
       )}
       <Button text={'Ответить'} />
@@ -48,4 +54,25 @@ const CheckboxQuestion = (props: QuestionsProps): JSX.Element => {
   );
 };
 
-export default CheckboxQuestion;
+const CheckboxQuestionForm = withFormik<MyFormProps, FormValues>({
+  mapPropsToValues: () => {
+    return {
+      answer: [],
+    };
+  },
+  validate: (values) => {
+    const errors: { answer?: string } = {};
+    if (values.answer.length === 0) {
+        errors.answer = 'Пожалуйста, выберите ответ';
+    }
+    return errors;
+},
+  handleSubmit: (values, { props, setSubmitting, resetForm }) => {
+    const { handleSubmit } = props;
+    handleSubmit(values);
+    resetForm();
+    setSubmitting(false);
+  },
+})(CheckboxQuestion);
+
+export default CheckboxQuestionForm;

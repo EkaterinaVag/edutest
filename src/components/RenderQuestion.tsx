@@ -1,9 +1,9 @@
 import React from 'react';
-import { type FormikProps } from 'formik';
-import RadioQuestion from './questions/RadioQuestion';
-import CheckboxQuestion from './questions/CheckboxQuestion';
-import TextInputQuestion from './questions/TextInputQuestion';
-import TextareaQuestion from './questions/TextareaQuestion';
+import CheckboxQuestionForm from './questions/CheckboxQuestion';
+import TextInputQuestionForm from './questions/TextInputQuestion';
+import TextareaQuestionForm from './questions/TextareaQuestion';
+import RadioQuestionForm from './questions/RadioQuestion';
+import useSubmit from '../hooks/useSubmit';
 
 interface QuestionType {
   type: string
@@ -12,22 +12,22 @@ interface QuestionType {
 interface QuestionsProps extends QuestionType {
   question: string
   options?: string[]
-  formik: FormikProps<{ answer: string[] }>
 }
 
 const RenderQuestion = (props: QuestionsProps): JSX.Element | null => {
-  const { type, question, options, formik } = props;
+  const { type, question, options } = props;
+  const { handleSubmit } = useSubmit();
   switch (type) {
-  case 'SINGLE_CHOICE':
-    return <RadioQuestion question={question} options={options} formik={formik} />;
-  case 'MULTIPLE_CHOICE':
-    return <CheckboxQuestion question={question} options={options} formik={formik} />;
-  case 'SHORT_ANSWER':
-    return <TextInputQuestion question={question} formik={formik} />;
-  case 'LONG_ANSWER':
-    return <TextareaQuestion question={question} formik={formik} />;
-  default:
-    return null;
+    case 'SINGLE_CHOICE':
+      return <RadioQuestionForm question={question} options={options} handleSubmit={handleSubmit} />;
+    case 'MULTIPLE_CHOICE':
+      return <CheckboxQuestionForm question={question} options={options} handleSubmit={handleSubmit} />;
+    case 'SHORT_ANSWER':
+      return <TextInputQuestionForm question={question} handleSubmit={handleSubmit} />;
+    case 'LONG_ANSWER':
+      return <TextareaQuestionForm question={question} handleSubmit={handleSubmit} />;
+    default:
+      return null;
   }
 };
 

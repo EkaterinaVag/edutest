@@ -1,12 +1,14 @@
 import React from 'react';
-import { type QuestionsProps } from '../../types';
+import { withFormik, FormikProps } from 'formik';
+
 import Button from '../Button/Button';
 import styles from './CommonQuestions.module.css';
+import { FormValues, QuestionsProps, MyFormProps } from '../../types';
 
-const TextInputQuestion = (props: QuestionsProps): JSX.Element => {
-  const { question, formik } = props;
+const TextInputQuestion = (props: QuestionsProps & FormikProps<FormValues>) => {
+  const { question, handleSubmit, handleChange, values } = props;
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <h3 className={styles.question}>{question}</h3>
 
       <label htmlFor="answer">Введите ответ:</label>
@@ -17,8 +19,8 @@ const TextInputQuestion = (props: QuestionsProps): JSX.Element => {
         id="answer"
         name="answer"
         type="text"
-        onChange={formik.handleChange}
-        value={formik.values.answer}
+        onChange={handleChange}
+        value={values.answer}
       />
       <br />
       <Button text={'Ответить'} />
@@ -26,4 +28,18 @@ const TextInputQuestion = (props: QuestionsProps): JSX.Element => {
   );
 };
 
-export default TextInputQuestion;
+const TextInputQuestionForm = withFormik<MyFormProps, FormValues>({
+  mapPropsToValues: () => {
+    return {
+      answer: [],
+    };
+  },
+  handleSubmit: (values, { props, resetForm, setSubmitting }) => {
+    const { handleSubmit } = props;
+    handleSubmit(values);
+    resetForm();
+    setSubmitting(false);
+  },
+})(TextInputQuestion);
+
+export default TextInputQuestionForm;
